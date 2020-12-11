@@ -1,0 +1,7 @@
+<!--miniprogram/pages/bisPage/endDevotePage/endDevotePage.wxml-->
+<view class="page-section-title">
+  {{pageMsg}}{{title}}
+  <view class="view3" wx:if="{{title != ''}}">
+    <button class='confirm' bindtap='endDevote' type="primary">结束当前投票</button>  
+  </view>
+</view>

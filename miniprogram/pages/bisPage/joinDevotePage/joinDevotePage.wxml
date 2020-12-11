@@ -1,0 +1,23 @@
+{{loadStr}}
+<view class="page-section-title">{{devotedMsg}}</view>
+<view class="page-body" wx:if="{{detailCnt < 1}}"> 
+  <view class="page-section" wx:if="{{loadStr == ''}}">
+    <view class="page-section-title">投票内容:{{title}}</view>
+    <view class="weui-cells weui-cells_after-title">
+      <radio-group bindchange="radioChange">
+        <label class="weui-cell weui-check__label" wx:for="{{items}}" wx:key="{{item.idx}}">
+          <view class="weui-cell__hd">
+            <radio value="{{item.idx}}"/>
+            {{item.val}}
+          </view>
+        </label>
+      </radio-group>
+    </view>
+  </view>
+  <view class="view3" >
+    {{errorMsg}}
+  </view>
+  <view class="view3" wx:if="{{loadStr == ''}}">
+    <button class='confirm' bindtap='submit' type="primary">提交</button>  
+  </view>
+</view>

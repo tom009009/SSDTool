@@ -1,0 +1,9 @@
+{{loadStr}}
+<view class="page-body" wx:if="loadStr == ''"> 
+  <label class="weui-cell weui-check__label" wx:for="{{invesRes}}" >
+    <view class="weui-cell__hd">
+      选项：{{item.val}}。
+      选择人数为：{{item.cnt}}
+    </view>
+  </label>
+</view>

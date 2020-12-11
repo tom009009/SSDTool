@@ -1,31 +1,41 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 
-cloud.init({
-})
+cloud.init({})
 
 const db = cloud.database()
 const _ = db.command
 // 云函数入口函数
 exports.main = async (event, context) => {
-  const wxContext = cloud.getWXContext()
-  var list = event.invesList;
+  const wxContext = cloud.getWXContext();
+  var title = event.title;
   var befID = 0;
-  await db.collection('invesRecordContent').where({
-    // gt 方法用于指定一个 "大于" 条件，此处 _.gt(30) 是一个 "大于 30" 的条件
-    endFlag: _.eq(1)
+  await db.collection('invesRecordMain').orderBy("invesID", "desc").where({
+    endFlag:1
   })
-  .get({
-    success: function(res) {
-        befID = res.data.invesID;
-    }
-  })
+  .get().then( res => {
+      if (res.data[0] != undefined) {
+        befID = res.data[0].invesID;
+        console.log("成功");
+        console.log("test1:" + res.data[0].invesID);
+        console.log("test2" + res.data);
+      }
+  });
   befID = befID + 1;
-  await db.collection('invesRecordContent').add({
+  var list = event.invesList;
+  var saveList = [];
+  for (let i = 0; i < list.length; i++) {
+    saveList[i] = {
+      idx: i + 1,
+      val: list[i]
+    }
+  };
+  await db.collection('invesRecordMain').add({
     data: {
       invesID : befID,
-      invesList: list,
       endFlag : 0,
+      content : saveList,
+      title: title
     } ,
     success(res) { //成功打印消息
       console.log(res)

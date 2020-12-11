@@ -13,7 +13,12 @@
     "pages/openapi/cloudid/cloudid",
     "pages/im/im",
     "pages/im/room/room",
-    "pages/bisPage/adminPage/adminPage"
+    "pages/bisPage/adminPage/adminPage",
+    "pages/bisPage/newDevotePage/newDevotePage",
+    "pages/bisPage/joinDevotePage/joinDevotePage",
+    "pages/bisPage/endDevotePage/endDevotePage",
+    "pages/bisPage/nowDevoteResPage/nowDevoteResPage",
+    "pages/bisPage/historyDevoteResPage/historyDevoteResPage"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

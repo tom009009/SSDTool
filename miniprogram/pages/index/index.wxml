@@ -1,11 +1,15 @@
 <!--index.wxml-->
-<view class="container">
-  <view class="navigate">
+<view class="container" wx:if="{{isLogin}}">
+  <view class="navigate" wx:if="{{adminUserFlag}}">
     <navigator url="/pages/bisPage/adminPage/adminPage">
       管理页面
     </navigator>
   </view>
-
+  <view class="navigate">
+    <navigator url="/pages/bisPage/joinDevotePage/joinDevotePage">
+      参加投票
+    </navigator>
+  </view>
   <view class="userinfo">
     <button 
       open-type="getUserInfo" 
@@ -18,5 +22,10 @@
       {{userInfo.nickName}}
     </view>
   </view>
-
+</view>
+<view class="container" wx:if="{{!isLogin}}">
+  您还没有登陆，请登陆！
+  <view class="navigate">
+    <button open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" type="primary">授权登陆</button>
+  </view>
 </view>

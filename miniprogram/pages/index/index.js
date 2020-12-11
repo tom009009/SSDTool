@@ -1,5 +1,5 @@
 //index.js
-const app = getApp()
+var app = getApp()
 
 Page({
   data: {
@@ -7,10 +7,38 @@ Page({
     userInfo: {},
     logged: false,
     takeSession: false,
-    requestResult: ''
+    requestResult: '',
+    isLogin: false,
+    adminUserFlag: false,
+  },
+
+  async getAdminUsers() {
+    await wx.cloud.callFunction({
+      // 云函数名称
+      name: 'getAdminUsers',
+      // 传给云函数的参数
+      data: {
+      },
+    }).then((res) => {
+        var data = res.result.adminUsers.data;
+        console.log("openID:" + res.result.openid);
+        console.log("unionID:" + res.result.unionid);
+        // var tmpInvesRes = [];
+        for (let key in data) {
+          console.log("adminUsersabc:" + data[key].adminUser);
+          console.log("nickName:" + this.data.userInfo.nickName);
+          if (this.data.userInfo.nickName == data[key].adminUser) {
+            this.setData({
+              adminUserFlag: true
+            })
+            console.log("adminUserFlag:" + this.data.adminUserFlag);
+          }
+        }
+    });
   },
 
   onLoad: function() {
+   
     if (!wx.cloud) {
       wx.redirectTo({
         url: '../chooseLib/chooseLib',
@@ -28,14 +56,29 @@ Page({
               this.setData({
                 avatarUrl: res.userInfo.avatarUrl,
                 userInfo: res.userInfo
-              })
+              });
+              app.globalData.userInfo = res.userInfo;
             }
-          })
+          }); 
+          
+          this.setData({
+            isLogin : true
+          });
+          this.getAdminUsers();
+        } else {
+          this.setData({
+            isLogin : false
+          });
         }
       }
+    });
+
+  },
+  bindGetUserInfo: function(e) {
+    wx.navigateTo({
+      url: '/pages/index/index',
     })
   },
-
   onGetUserInfo: function(e) {
     if (!this.data.logged && e.detail.userInfo) {
       this.setData({
