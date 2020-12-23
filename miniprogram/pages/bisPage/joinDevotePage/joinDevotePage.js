@@ -1,19 +1,21 @@
 // miniprogram/pages/bisPage/devotePage/devotePage.js
-var app = getApp()
+var app = getApp();
+var comConst = require("../../../utils/comConst.js");
 
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
     items: [],
     userInfo: {},
-    loadStr : "页面正在载入中，请稍后，你手机网络不给力啊",
+    loadStr : comConst.loadStr,
+    loginedStr: " ",
     errorMsg: "",
     title: "",
     invesID : 0,
-    detailCnt: 0
+    detailCnt: 0,
+    isLogin: false,
   },
   radioChange(e) {
     console.log('radio发生change事件，携带value值为：', e.detail.value)
@@ -89,7 +91,8 @@ Page({
         });
         if (this.data.detailCnt >= 1) {
           this.setData({
-            loadStr: "您已经投过票，不允许重复投票",
+            loginedStr: "您已经投过票，不允许重复投票",
+            loadStr: "",
           })
         } else {
           // this.getData();
@@ -103,7 +106,8 @@ Page({
             title: tmpTitle,
           });
           this.setData({
-            loadStr : ""
+            loginedStr : "",
+            loadStr: ""
           })
         }
         console.log("cnt:" + res.result.cnt.total);
@@ -131,10 +135,30 @@ Page({
           // }
           console.log(list);
           console.log("invesID:" + tmpInvesID);
-          this.getDetailCnt(tmpInvesID, tmpTitle, list);
+          if (this.data.isLogin == true) {
+            this.getDetailCnt(tmpInvesID, tmpTitle, list);
+          } else {
+               // this.getData();
+            this.setData({
+              invesID: tmpInvesID,
+            });
+            this.setData({
+              items: list,
+            });
+            this.setData({
+              title: tmpTitle,
+            });
+            this.setData({
+              errorMsg : "由于您未登陆，只能查看投票内容和选项，不能提交，如想提交，请返回首页登陆再提交",
+              loginedStr : "",
+              loadStr: ""
+            })
+          }
+          
         } else {
           this.setData({
-            loadStr : "目前没有可以投选的投票，请等待新一轮投票"
+            loginedStr : "目前没有可以投选的投票，请等待新一轮投票",
+            loadStr: "",
           })
         }
         
@@ -147,8 +171,14 @@ Page({
   onLoad: function (options) {
     let test = app.globalData.userInfo;
     if (test) {
-      console.log("yes3" + test.nickName);
-    }
+      if (test.nickName != undefined) {
+        this.setData({
+          isLogin: true,
+        })
+      }
+      console.log("isLogin:" + this.data.isLogin);
+      console.log("globbleINFO nickName:" + test.nickName);
+    } 
     this.setData({
       userInfo : test,
     });

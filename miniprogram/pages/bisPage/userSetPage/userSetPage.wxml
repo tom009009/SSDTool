@@ -1,0 +1,19 @@
+<!--miniprogram/pages/bisPage/userSetPage/userSetPage.wxml-->
+<view class="ad_popError" wx:if="{{popErrorMsg}}">{{popErrorMsg}}</view>
+注：本产品为SSD内部工具，输入密码才能设定所属部门并且投票
+<view>
+  <text>\n</text>
+</view>
+
+<view>
+ <view class="weui-cell">
+     <view class="input">您所在的部门为：<single-select prop-array='{{selectArray}}'  bind:select='select' /></view>
+   </view>
+   <view class="input">您的名字为： <input type="text" class='inputtext' placeholder='请输入' value=''  bindinput='getDepartName'/>
+   </view>
+   <view class="input">请输入SSD密码： <input type="password" class='inputtext' placeholder='请输入' value=''  bindinput='getDepartPass'/>
+   </view>
+   <view class="view3">
+    <button class='confirm' bindtap='submit' type="primary">提交</button>  
+  </view>
+</view>

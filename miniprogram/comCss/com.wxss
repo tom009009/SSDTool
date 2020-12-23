@@ -1,0 +1,28 @@
+
+.menus{
+  color: #007aff;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.inputtext {
+  display: flex;
+  background-color:#ffffff;
+  height: 100%;
+  border: 3px double lightblue;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.ad_popError{ 
+    background: #de352d; color: #fff; 
+    height: 70rpx; 
+    line-height: 58rpx; 
+    font-size: 30rpx; 
+    text-align: center; 
+    position: absolute; 
+    left: 0; 
+    top: 0; 
+    width: 100%; 
+    z-index:3;
+  }

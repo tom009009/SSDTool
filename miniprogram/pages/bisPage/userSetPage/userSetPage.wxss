@@ -1,0 +1,8 @@
+@import "/comCss/com.wxss";
+
+.input {
+  display: flex;
+  background-color:#ffffff;
+  height: 100%;
+  flex-direction: row;
+}

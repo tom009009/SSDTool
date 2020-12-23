@@ -1,11 +1,13 @@
 // miniprogram/pages/bisPage/nowDevoteResPage/nowDevoteResPage.js
+var comConst = require("../../../utils/comConst.js");
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    loadStr: "页面正在载入中，请稍后，你手机网络不给力啊",
+    loadStr: comConst.loadStr,
     invesRes: [],
   },
   async getNowCnt(invesID, paramList, list) {

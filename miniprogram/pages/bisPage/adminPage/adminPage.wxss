@@ -4,6 +4,7 @@ page {
   flex-direction: column;
   justify-content: flex-start;
 }
+@import "/comCss/com.wxss";
 .view1 {
   display: flex;
   background-color:#ffffff;

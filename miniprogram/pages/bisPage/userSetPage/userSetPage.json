@@ -1,0 +1,5 @@
+{   
+  "navigationBarTitleText":"部门姓名设定",
+  "usingComponents": {
+     "single-select": "/components/select/select"   }
+ }

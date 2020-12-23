@@ -1,5 +1,5 @@
 //index.js
-var app = getApp()
+var app = getApp();
 
 Page({
   data: {
@@ -9,7 +9,7 @@ Page({
     takeSession: false,
     requestResult: '',
     isLogin: false,
-    adminUserFlag: false,
+    adminUserFlag: false
   },
 
   async getAdminUsers() {
@@ -74,6 +74,7 @@ Page({
     });
 
   },
+
   bindGetUserInfo: function(e) {
     wx.navigateTo({
       url: '/pages/index/index',

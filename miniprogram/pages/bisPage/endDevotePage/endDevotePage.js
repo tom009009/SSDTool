@@ -1,6 +1,8 @@
 // miniprogram/pages/bisPage/endDevotePage/endDevotePage.js
 
-var app = getApp()
+var app = getApp();
+var comConst = require("../../../utils/comConst.js");
+
 Page({
 
   /**

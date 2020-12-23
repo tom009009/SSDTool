@@ -1,14 +1,7 @@
 <!--index.wxml-->
-<view class="container" wx:if="{{isLogin}}">
-  <view class="navigate" wx:if="{{adminUserFlag}}">
-    <navigator url="/pages/bisPage/adminPage/adminPage">
-      管理页面
-    </navigator>
-  </view>
-  <view class="navigate">
-    <navigator url="/pages/bisPage/joinDevotePage/joinDevotePage">
-      参加投票
-    </navigator>
+<view class="container" >
+  <view wx:if="{{!isLogin}}">
+    产品说明：本产品只统计投票，可以先点击参加投票体验后再登陆
   </view>
   <view class="userinfo">
     <button 
@@ -21,11 +14,29 @@
     <view class="userinfo-nickname-wrapper">
       {{userInfo.nickName}}
     </view>
+    <view class="navigate" wx:if="{{!isLogin}}">
+    <button open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">点击登陆</button>
+  </view>
+  </view>
+  <view class="navigator">
+    <text>\n</text>
+  </view>
+  <view class="navigator">
+    操作菜单：
   </view>
 </view>
-<view class="container" wx:if="{{!isLogin}}">
-  您还没有登陆，请登陆！
-  <view class="navigate">
-    <button open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" type="primary">授权登陆</button>
+<view class="menus" wx:if="{{adminUserFlag}}">
+    <navigator url="/pages/bisPage/adminPage/adminPage">
+      点击进入管理页面
+    </navigator>
   </view>
-</view>
+  <view class="menus" wx:if="{{isLogin}}">
+    <navigator url="/pages/bisPage/userSetPage/userSetPage">
+      设定所属课
+    </navigator>
+  </view>
+  <view class="menus">
+    <navigator url="/pages/bisPage/joinDevotePage/joinDevotePage">
+      点击参加投票
+    </navigator>
+  </view>

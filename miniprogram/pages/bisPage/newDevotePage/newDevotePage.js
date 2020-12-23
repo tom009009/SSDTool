@@ -1,5 +1,7 @@
-Page({
 
+var comConst = require("../../../utils/comConst.js");
+
+Page({
   /**
    * 页面的初始数据
    */
@@ -7,35 +9,37 @@ Page({
     array:[0],//默认显示一个
     inputVal:[],//所有input的内容
     title: "",
-    errorMsg: "页面正在载入中，请稍后，你手机网络不给力啊"
+    errorMsg: comConst.loadStr,
+    popErrorMsg: "",
+    idx: 0,
 },
 //获取input的值
-getInputVal:function(e){
-    var nowIdx=e.currentTarget.dataset.idx;//获取当前索引
+  getInputVal:function(e){
+      var nowIdx=e.currentTarget.dataset.idx;//获取当前索引
+      var val=e.detail.value;//获取输入的值
+      var oldVal=this.data.inputVal;
+      oldVal[nowIdx] = val;//修改对应索引值的内容
+      this.setData({
+          inputVal:oldVal
+      })
+  },
+  getTitleVal:function(e){
     var val=e.detail.value;//获取输入的值
-    var oldVal=this.data.inputVal;
-    oldVal[nowIdx] = val;//修改对应索引值的内容
     this.setData({
-        inputVal:oldVal
+        title:val
     })
-},
-getTitleVal:function(e){
-  var val=e.detail.value;//获取输入的值
-  this.setData({
-      title:val
-  })
-},
+  },
 //添加input
-addInput:function(){
-    this.data.idx++;
-    var old=this.data.array;
-    old.push(1);//这里不管push什么，只要数组长度增加1就行
-    this.setData({
-        array: old
-    })
-},
+  addInput:function(){
+      this.data.idx++;
+      var old=this.data.array;
+      old.push(1);//这里不管push什么，只要数组长度增加1就行
+      this.setData({
+          array: old
+      })
+  },
 //删除input
-delInput:function(e){
+  delInput:function(e){
     this.data.idx--;
     var nowidx=e.currentTarget.dataset.idx;//当前索引
     var oldInputVal=this.data.inputVal;//所有的input值
@@ -51,9 +55,38 @@ delInput:function(e){
     })
   }, 
   submit: function() {
-    let that = this;
-    console.log(this.data.inputVal[0]);
-    console.log(this.data.inputVal[1]);
+    if (comConst.trim(this.data.title) == "") {
+      this.setData({
+        popErrorMsg: "调查标题不能为空！"
+      });
+      return;
+    }
+    var inputVal = this.data.inputVal;
+    if (inputVal.length == 0) {
+      this.setData({
+        popErrorMsg: "请至少添加一个选项！" 
+      });
+      return;
+    }
+    console.log("idx:" + this.data.idx);
+    console.log("length:" + this.data.inputVal.length);
+    if (this.data.idx != (this.data.inputVal.length - 1)) {
+      this.setData({
+        popErrorMsg: "还有没有输入的选项！" 
+      });
+      return;
+    }
+    
+    for (let key in inputVal) {
+      var index = key + 1;
+      console.log("选项" + index + "为：" + inputVal[key]);
+      if (comConst.trim(inputVal[key]) == "") {
+        this.setData({
+          popErrorMsg: "第" + index + "的选项不能为空！" 
+        });
+        return;
+      }
+    }
     wx.cloud.callFunction({
       // 云函数名称
       name: 'saveInvesRes',

@@ -1,13 +1,10 @@
 /**index.wxss**/
-
+@import "/comCss/com.wxss";
 page {
   background: #f6f6f6;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-}
-.test{
-  color: #ff0000;
 }
 .userinfo, .uploader, .tunnel {
   margin-top: 40rpx;

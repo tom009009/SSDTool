@@ -1,15 +1,19 @@
-<view class="container" wx:if="{{errorMsg == ''}}">
+<view class="ad_popError" wx:if="{{popErrorMsg}}">{{popErrorMsg}}</view>
+<view wx:if="{{errorMsg == ''}}">
   <view class="view10">
-    请输入调查标题
+    调查标题为：
   </view>
-  <view class="view11">
-    <input type="text" class='b-ipt' placeholder='请输入' value='{{title}}'  bindinput='getTitleVal'/>
+  <view class="inputtext">
+    <input type="text" class='b-ipt' placeholder='请输入调查标题' value='{{title}}'  bindinput='getTitleVal'/>
+  </view>
+  <view class="view4" >
+    <text>\n</text>
   </view>
   <view class="view1">
-    <button class='add-li' bindtap='addInput' type="primary" size="mini">添加调查选项</button>  
+    <button class='add-li' bindtap='addInput' type="primary" size="mini">点击添加调查选项</button>  
   </view>
   <view class='view2' wx:for='{{array}}' wx:key=''>
-    <input type='text' class='b-ipt' placeholder='请输入' data-idx='{{index}}' value='{{inputVal[index]}}' bindinput='getInputVal'/>    
+    <input type='text' class='inputtext' placeholder='请输入选项' data-idx='{{index}}' value='{{inputVal[index]}}' bindinput='getInputVal'/>    
     <button class='del' bindtap='delInput' data-idx='{{index}}' type="primary" size="mini">删除</button>
   </view>
   <view class="view4" >

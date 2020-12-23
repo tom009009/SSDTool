@@ -1,23 +1,19 @@
 <!--index.wxml-->
-<view class="container">
-  <view class="navigate">
+<view class='container'> 操作菜单：</view>
+<view>
+  <view class="menus">
     <navigator url="/pages/bisPage/newDevotePage/newDevotePage">
       发起新投票
     </navigator>
   </view>
-  <view class="navigate">
+  <view class="menus">
     <navigator url="/pages/bisPage/endDevotePage/endDevotePage">
       结束当前投票
     </navigator>
   </view>
-  <view class="navigate">
+  <view class="menus">
     <navigator url="/pages/bisPage/nowDevoteResPage/nowDevoteResPage">
        查看当前投票结果
-    </navigator>
-  </view>
-  <view class="navigate">
-    <navigator url="/pages/bisPage/historyDevoteResPage/historyDevoteResPage">
-       查看历次投票结果
     </navigator>
   </view>
 </view>
