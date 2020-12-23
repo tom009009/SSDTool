@@ -60,7 +60,7 @@ Page({
 
         } else {
           this.setData({
-            loadStr : "目前没有未结束的投票！"
+            loadStr : "目前没有未结束的投票！"
           })
         }
         

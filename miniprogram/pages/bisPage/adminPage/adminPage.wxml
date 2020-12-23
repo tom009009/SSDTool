@@ -13,7 +13,12 @@
   </view>
   <view class="menus">
     <navigator url="/pages/bisPage/nowDevoteResPage/nowDevoteResPage">
-       查看当前投票结果
+       查看当前投票结果合计
+    </navigator>
+  </view>
+  <view class="menus">
+    <navigator url="/pages/bisPage/nowDevoteResDetailPage/nowDevoteResDetailPage">
+       查看当前投票明细
     </navigator>
   </view>
 </view>

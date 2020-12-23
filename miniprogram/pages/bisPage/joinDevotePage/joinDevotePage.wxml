@@ -19,15 +19,16 @@
   <view class="view3" >
     {{errorMsg}}
   </view>
-  <view class="view3" wx:if="{{loginedStr == ''}}">
+  <view class="view3" wx:if="{{loginedStr == '' && isRegisted == true}}">
     <button class='confirm' bindtap='submit' type="primary">提交</button>  
   </view>
 </view>
 </view>
 <view class="main" wx:if="{{isLogin == false}}">
+{{loginedStr}}
 <view class="page-section-title">{{devotedMsg}}</view>
 <view class="page-body" wx:if="{{detailCnt < 1}}"> 
-  <view class="page-section" wx:if="{{loadStr == ''}}">
+  <view class="page-section" wx:if="{{loginedStr == ''}}">
     <view class="page-section-title">投票内容:{{title}}</view>
     <view class="weui-cells weui-cells_after-title">
       <radio-group bindchange="radioChange">

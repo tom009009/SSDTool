@@ -10,15 +10,13 @@ const _ = db.command
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext();
   var tmpRes;
-  var nickName = event.nickName;
   var invesID = event.invesID;
+  var openid = wxContext.OPENID;
   await db.collection('invesResultDetail').where({
-    nickName: nickName,
+    openid: openid,
     invesID: invesID,
   })
   .count().then( res => {
-      console.log("成功");
-      console.log("test2" + res);
       tmpRes = res;
   });
   return {

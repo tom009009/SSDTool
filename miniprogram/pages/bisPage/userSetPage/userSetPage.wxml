@@ -4,7 +4,12 @@
 <view>
   <text>\n</text>
 </view>
-
+<view class="input">
+  <text>{{departUserInfoStr}}</text>
+</view>
+<view>
+  <text>\n</text>
+</view>
 <view>
  <view class="weui-cell">
      <view class="input">您所在的部门为：<single-select prop-array='{{selectArray}}'  bind:select='select' /></view>

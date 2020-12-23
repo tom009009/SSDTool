@@ -16,6 +16,7 @@ Page({
     invesID : 0,
     detailCnt: 0,
     isLogin: false,
+    isRegisted: false,
   },
   radioChange(e) {
     console.log('radio发生change事件，携带value值为：', e.detail.value)
@@ -86,6 +87,7 @@ Page({
         invesID : tmpInvesID,
       },
     }).then((res) => {
+      console.log("cnt:" + res.result.cnt.total);
         this.setData({
           detailCnt : res.result.cnt.total,
         });
@@ -95,7 +97,6 @@ Page({
             loadStr: "",
           })
         } else {
-          // this.getData();
           this.setData({
             invesID: tmpInvesID,
           });
@@ -110,9 +111,39 @@ Page({
             loadStr: ""
           })
         }
-        console.log("cnt:" + res.result.cnt.total);
     });
   },
+  async getDepartmentUserInfo(tmpInvesID, tmpTitle, list) {
+    await wx.cloud.callFunction({
+      // 云函数名称
+      name: 'getUserInfo',
+      // 传给云函数的参数
+      data: {
+      },
+    }).then((res) => {
+      console.log("departUserInfo:" + JSON.stringify(res.result.departUserInfo.list[0]));
+      if (res.result.departUserInfo.list[0] != undefined) {
+        this.setData({isRegisted: true});
+        this.getDetailCnt(tmpInvesID, tmpTitle, list);
+      } else {
+        this.setData({
+          invesID: tmpInvesID,
+        });
+        this.setData({
+          items: list,
+        });
+        this.setData({
+          title: tmpTitle,
+        });
+        this.setData({
+          errorMsg : "由于您未设定所属部门，只能查看投票内容和选项，不能提交，如想提交，请返回首页设定所属部门后再提交",
+          loginedStr : "",
+          loadStr: ""
+        })
+      }
+    });
+  },
+
   async getData() {
     console.log("starting getData");
     await wx.cloud.callFunction({
@@ -129,14 +160,10 @@ Page({
           var list = res.result.invesList.data[0].content;
           var tmpInvesID = res.result.invesList.data[0].invesID;
           var tmpTitle = res.result.invesList.data[0].title;
-          // var listJson = [];
-          // for (let key in list) {
-          //   listJson.push(list[key]);
-          // }
           console.log(list);
           console.log("invesID:" + tmpInvesID);
           if (this.data.isLogin == true) {
-            this.getDetailCnt(tmpInvesID, tmpTitle, list);
+            this.getDepartmentUserInfo(tmpInvesID, tmpTitle, list);
           } else {
                // this.getData();
             this.setData({
@@ -157,30 +184,31 @@ Page({
           
         } else {
           this.setData({
-            loginedStr : "目前没有可以投选的投票，请等待新一轮投票",
+            loginedStr : "目前没有可以投选的投票，请等待新一轮投票",
             loadStr: "",
           })
         }
         
     });
   },
+
   
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let test = app.globalData.userInfo;
-    if (test) {
-      if (test.nickName != undefined) {
+    let userInfoLocal = app.globalData.userInfo;
+    if (userInfoLocal) {
+      if (userInfoLocal.nickName != undefined) {
         this.setData({
           isLogin: true,
         })
       }
       console.log("isLogin:" + this.data.isLogin);
-      console.log("globbleINFO nickName:" + test.nickName);
+      console.log("globbleINFO nickName:" + userInfoLocal.nickName);
     } 
     this.setData({
-      userInfo : test,
+      userInfo : userInfoLocal,
     });
     // 查询当次投票是否已经参加，如果完成则不允许再次投票
     this.getData();

@@ -7,11 +7,13 @@ const db = cloud.database()
 const _ = db.command
 // 云函数入口函数
 exports.main = async (event, context) => {
-  const wxContext = cloud.getWXContext()
+  const wxContext = cloud.getWXContext();
+  var openid = wxContext.OPENID;
   await db.collection('invesResultDetail').add({
     data: {
-      invesID : event.invesID,
+      openid: openid,
       nickName : event.nickName,
+      invesID : event.invesID,
       selectRes : event.selectRes
     } ,
     success(res) { //成功打印消息
