@@ -1,1 +1,8 @@
-test
+{{loadStr}}
+<view class="page-body" wx:if="loadStr == ''"> 
+  <label class="weui-cell weui-check__label" wx:for="{{detailInfo}}" >
+    <view class="weui-cell__hd">
+      部门:{{item.value}}。姓名:{{item.username}}。选项:{{item.selectRes}}。
+    </view>
+  </label>
+</view>

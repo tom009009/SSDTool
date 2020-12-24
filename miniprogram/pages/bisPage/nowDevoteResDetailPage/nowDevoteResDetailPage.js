@@ -1,30 +1,55 @@
 // miniprogram/pages/bisPage/nowDevoteResDetailPage/nowDevoteResDetailPage.js
+var comConst = require("../../../utils/comConst.js");
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    loadStr: comConst.loadStr,
+    detailInfo: [],
   },
-
-  async getInvesDetail() {
+  async getData() {
+    await wx.cloud.callFunction({
+      // 云函数名称
+      name: 'getUnfinishInvesRes',
+      // 传给云函数的参数
+      data: {
+      },
+    }).then((res) => {
+      var data = res.result.invesList.data[0];
+      console.log("yes"+ JSON.stringify(data));
+      if (data != undefined) {
+        this.getInvesDetail(data.invesID);
+      } else {
+        this.setData({
+          loadStr : "目前没有未结束的投票！"
+        })
+      }
+    });
+  },
+  async getInvesDetail(invesID) {
     await wx.cloud.callFunction({
       // 云函数名称
       name: 'getInvesResDetail',
       // 传给云函数的参数
       data: {
-        invesID: 2,
+        invesID: invesID,
       },
     }).then((res) => {
-       console.log(JSON.stringify(res.result.invesResDetail));
+       console.log(JSON.stringify(res.result.invesResDetail.list));
+       this.setData({
+        detailInfo: res.result.invesResDetail.list,
+        loadStr: ""
+       })
     });
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getInvesDetail();
+    this.getData();
   },
 
   /**

@@ -10,19 +10,37 @@ exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext();
   var invesID = event.invesID;
   var resData;
+  var $ = cloud.database().command.aggregate;
 
   await db.collection('invesResultDetail').aggregate()
+  .sort({
+    idx: 1
+  })
+  // 第一个lookup先把调查结果和用户表关联
   .lookup({
     from: "users",
     localField: "openid",
     foreignField: "openid",
     as: "userInfo",
   })
+  .replaceRoot({
+    newRoot: $.mergeObjects([$.arrayElemAt(['$userInfo', 0]), '$$ROOT'])
+  })
+  .project({
+    userInfo: 0
+  })
+  // 调查详细表和用户表关联后作为一个集合在和部门表结合
   .lookup({
     from: "departments",
     localField: "departid",
     foreignField: "idx",
     as: "departInfo",
+  })
+  .replaceRoot({
+    newRoot: $.mergeObjects([$.arrayElemAt(['$departInfo', 0]), '$$ROOT'])
+  })
+  .project({
+    departInfo: 0
   })
   .match({
     invesID: invesID,
